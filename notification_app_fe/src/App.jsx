@@ -113,39 +113,113 @@ export default function App() {
       {loading ? (
         <Box display="flex" justifyContent="center" my={5}><CircularProgress /></Box>
       ) : (
-        <TableContainer component={Paper} elevation={6} sx={{ borderRadius: 3, overflow: 'hidden' }}>
-          <Table>
-            <TableHead sx={{ backgroundColor: '#1e1e1e' }}>
-              <TableRow>
-                <TableCell sx={{ color: '#fff' }}><strong>Notification ID</strong></TableCell>
-                <TableCell sx={{ color: '#fff' }}><strong>Category</strong></TableCell>
-                <TableCell sx={{ color: '#fff' }}><strong>Message Details</strong></TableCell>
-                <TableCell sx={{ color: '#fff' }}><strong>Timestamp</strong></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody sx={{ backgroundColor: '#fff' }}>
-              {notifications.map((item, idx) => (
-                <TableRow key={item.id || idx} hover>
-                  <TableCell sx={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#333' }}>
-                    {item.id}
-                  </TableCell>
-                  <TableCell>
-                    <Chip
-                      label={item.type}
-                      color={getChipColor(item.type)}
-                      size="small"
-                      sx={{ fontWeight: 'bold' }}
-                    />
-                  </TableCell>
-                  <TableCell sx={{ color: '#333' }}>{item.message}</TableCell>
-                  <TableCell sx={{ color: '#666', fontSize: '0.85rem' }}>
-                    {item.timestamp}
-                  </TableCell>
+          <TableContainer
+            component={Paper}
+            elevation={6}
+            sx={{
+              borderRadius: 3,
+              overflow: 'hidden',
+              backgroundColor: '#fff'
+            }}
+          >
+            <Table sx={{ display: { xs: 'block', sm: 'table' } }}>
+              {/* Headings show normally on desktop, hidden on mobile */}
+              <TableHead sx={{
+                backgroundColor: '#1e1e1e',
+                display: { xs: 'none', sm: 'table-header-group' }
+              }}>
+                <TableRow>
+                  <TableCell sx={{ color: '#fff' }}><strong>Notification ID</strong></TableCell>
+                  <TableCell sx={{ color: '#fff' }}><strong>Category</strong></TableCell>
+                  <TableCell sx={{ color: '#fff' }}><strong>Message Details</strong></TableCell>
+                  <TableCell sx={{ color: '#fff' }}><strong>Timestamp</strong></TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+
+              <TableBody sx={{ display: { xs: 'block', sm: 'table-row-group' }, backgroundColor: '#fff' }}>
+                {notifications.map((item, idx) => (
+                  <TableRow
+                    key={item.id || idx}
+                    hover
+                    sx={{
+                      display: { xs: 'block', sm: 'table-row' },
+                      borderBottom: { xs: '2px solid #f0f0f0', sm: '1px solid rgba(224, 224, 224, 1)' },
+                      p: { xs: 2, sm: 0 },
+                      mb: { xs: 1, sm: 0 }
+                    }}
+                  >
+                    {/* 1. Notification ID Block */}
+                    <TableCell sx={{
+                      display: { xs: 'block', sm: 'table-cell' },
+                      p: { xs: '6px 0', sm: '16px' },
+                      borderBottom: { xs: 'none', sm: 'inherit' }
+                    }}>
+                      <Box display="flex" flexDirection={{ xs: 'row', sm: 'unset' }} gap={1}>
+                        <Typography variant="body2" sx={{ display: { xs: 'block', sm: 'none' }, fontWeight: 'bold', color: '#555', minWidth: '120px' }}>
+                          Notification ID:
+                        </Typography>
+                        <Typography variant="body2" sx={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#333' }}>
+                          {item.id}
+                        </Typography>
+                      </Box>
+                    </TableCell>
+
+                    {/* 2. Category Block */}
+                    <TableCell sx={{
+                      display: { xs: 'block', sm: 'table-cell' },
+                      p: { xs: '6px 0', sm: '16px' },
+                      borderBottom: { xs: 'none', sm: 'inherit' }
+                    }}>
+                      <Box display="flex" flexDirection={{ xs: 'row', sm: 'unset' }} gap={1} alignItems="center">
+                        <Typography variant="body2" sx={{ display: { xs: 'block', sm: 'none' }, fontWeight: 'bold', color: '#555', minWidth: '120px' }}>
+                          Category:
+                        </Typography>
+                        <Chip
+                          label={item.type}
+                          color={getChipColor(item.type)}
+                          size="small"
+                          sx={{ fontWeight: 'bold' }}
+                        />
+                      </Box>
+                    </TableCell>
+
+                    {/* 3. Message Details Block */}
+                    <TableCell sx={{
+                      display: { xs: 'block', sm: 'table-cell' },
+                      p: { xs: '6px 0', sm: '16px' },
+                      borderBottom: { xs: 'none', sm: 'inherit' }
+                    }}>
+                      <Box display="flex" flexDirection={{ xs: 'row', sm: 'unset' }} gap={1}>
+                        <Typography variant="body2" sx={{ display: { xs: 'block', sm: 'none' }, fontWeight: 'bold', color: '#555', minWidth: '120px' }}>
+                          Message:
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: '#222' }}>
+                          {item.message}
+                        </Typography>
+                      </Box>
+                    </TableCell>
+
+                    {/* 4. Timestamp Block */}
+                    <TableCell sx={{
+                      display: { xs: 'block', sm: 'table-cell' },
+                      p: { xs: '6px 0', sm: '16px' },
+                      borderBottom: { xs: 'none', sm: 'inherit' }
+                    }}>
+                      <Box display="flex" flexDirection={{ xs: 'row', sm: 'unset' }} gap={1}>
+                        <Typography variant="body2" sx={{ display: { xs: 'block', sm: 'none' }, fontWeight: 'bold', color: '#555', minWidth: '120px' }}>
+                          Timestamp:
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
+                          {item.timestamp}
+                        </Typography>
+                      </Box>
+                    </TableCell>
+
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
       )}
 
       {/* Centered Pagination controls cleaner layout */}
