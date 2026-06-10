@@ -9,22 +9,22 @@ An enterprise-grade, full-stack notification management system featuring a decou
 ### 1. Server Authentication & Token Acquisition
 *Successful execution of the initial handshake request, demonstrating active authentication validation rules and session token issuance:*
 
-![Server Authentication Verification](registration_output.png)
+![Server Authentication Verification](assets/images/registration_output.png)
 
 ### 2. Algorithmic Weight Prioritization (Stage 6 Console Core)
 *The system compiling data feeds via the priority engine, automatically grouping critical data buckets (Placement > Result > Event) and resolving ties chronologically:*
 
-![Algorithmic Priority Sorting Table](stage6_output.png)
+![Algorithmic Priority Sorting Table](assets/images/stage6_output.png)
 
 ### 3. Desktop Management Dashboard
 *Full desktop presentation state of the campus notification web portal running strictly on standard port criteria, rendered with premium components:*
 
-![Desktop Workspace Dashboard View](desktop_view.jpeg)
-![Filteration](filter.jpeg)
+![Desktop Workspace Dashboard View](assets/images/desktop_view..jpeg)
+![Filteration](assets/images/filter.jpeg)
 ### 4. Adaptive Mobile Layout Matrix (Zero-Scroll Card Transformation)
 *Dynamic mobile card-stacking view. The application identifies small device viewports, strips row column bounds to prevent clipping, and introduces explicit typographic descriptors:*
 
-![Mobile Stacked Card View Layout](mobile_view.jpeg)
+![Mobile Stacked Card View Layout](assets/images/mobile_view.jpeg)
 
 ---
 
