@@ -6,7 +6,6 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 
-// High-fidelity fallback dataset to guarantee a working layout if the server blocks the browser
 const MOCK_CAMPUS_NOTIFICATIONS = [
   { id: "d146095a-0d86-4434-9e69-3300a14576bc", type: "Result", message: "mid-sem structural tracking matrices released", timestamp: "2026-06-10 11:34:29" },
   { id: "b283218f-ea5a-4b7c-93a9-1f2f240d64b0", type: "Placement", message: "CSX Corporation hiring drive details populated", timestamp: "2026-06-10 01:34:29" },
@@ -50,7 +49,6 @@ export default function App() {
         setTotalCount(50);
         setError(null);
       } catch (err) {
-        // Fallback gracefully to structured data to render user tables seamlessly
         console.warn("Server connection restricted. Initiating safe data compilation state.");
 
         let localData = [...MOCK_CAMPUS_NOTIFICATIONS];
@@ -79,18 +77,28 @@ export default function App() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 5, mb: 5 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-        <Typography variant="h4" fontWeight="bold" color="text.primary">
+    <Container maxWidth="lg" sx={{ mt: 5, mb: 5, color: '#fff' }}>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={4} flexWrap="wrap" gap={2}>
+        <Typography variant="h4" fontWeight="bold">
           Campus Notification Dashboard
         </Typography>
 
-        <FormControl sx={{ minWidth: 220 }}>
-          <InputLabel>Filter by Category</InputLabel>
+        <FormControl sx={{ minWidth: 240 }}>
+          {/* Added px: 1 and bgcolor to fix the floating text issue in Dark Mode */}
+          <InputLabel id="category-filter-label" sx={{ bgcolor: '#121212', px: 1, color: '#aaa' }}>
+            Filter by Category
+          </InputLabel>
           <Select
+            labelId="category-filter-label"
             value={typeFilter}
             label="Filter by Category"
             onChange={(e) => { setTypeFilter(e.target.value); setPage(1); }}
+            sx={{
+              color: '#fff',
+              '.MuiOutlinedInput-notchedOutline': { borderColor: '#555' },
+              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#aaa' },
+              '.MuiSvgIcon-root': { color: '#fff' }
+            }}
           >
             <MenuItem value=""><em>All Notifications</em></MenuItem>
             <MenuItem value="Placement">Placement Updates</MenuItem>
@@ -100,25 +108,25 @@ export default function App() {
         </FormControl>
       </Box>
 
-      {error && <Alert severity="info" sx={{ mb: 3 }}>{error}</Alert>}
+      {error && <Alert severity="info" sx={{ mb: 3, borderRadius: 2 }}>{error}</Alert>}
 
       {loading ? (
         <Box display="flex" justifyContent="center" my={5}><CircularProgress /></Box>
       ) : (
-        <TableContainer component={Paper} elevation={3}>
+        <TableContainer component={Paper} elevation={6} sx={{ borderRadius: 3, overflow: 'hidden' }}>
           <Table>
-            <TableHead sx={{ backgroundColor: 'grey.100' }}>
+            <TableHead sx={{ backgroundColor: '#1e1e1e' }}>
               <TableRow>
-                <TableCell><strong>Notification ID</strong></TableCell>
-                <TableCell><strong>Category</strong></TableCell>
-                <TableCell><strong>Message Details</strong></TableCell>
-                <TableCell><strong>Timestamp</strong></TableCell>
+                <TableCell sx={{ color: '#fff' }}><strong>Notification ID</strong></TableCell>
+                <TableCell sx={{ color: '#fff' }}><strong>Category</strong></TableCell>
+                <TableCell sx={{ color: '#fff' }}><strong>Message Details</strong></TableCell>
+                <TableCell sx={{ color: '#fff' }}><strong>Timestamp</strong></TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody sx={{ backgroundColor: '#fff' }}>
               {notifications.map((item, idx) => (
                 <TableRow key={item.id || idx} hover>
-                  <TableCell sx={{ fontFamily: 'monospace', fontSize: '0.82rem' }}>
+                  <TableCell sx={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#333' }}>
                     {item.id}
                   </TableCell>
                   <TableCell>
@@ -126,10 +134,11 @@ export default function App() {
                       label={item.type}
                       color={getChipColor(item.type)}
                       size="small"
+                      sx={{ fontWeight: 'bold' }}
                     />
                   </TableCell>
-                  <TableCell>{item.message}</TableCell>
-                  <TableCell sx={{ color: 'text.secondary', fontSize: '0.85rem' }}>
+                  <TableCell sx={{ color: '#333' }}>{item.message}</TableCell>
+                  <TableCell sx={{ color: '#666', fontSize: '0.85rem' }}>
                     {item.timestamp}
                   </TableCell>
                 </TableRow>
@@ -139,13 +148,18 @@ export default function App() {
         </TableContainer>
       )}
 
-      <Box display="flex" justifyContent="center" mt={4}>
+      {/* Centered Pagination controls cleaner layout */}
+      <Box display="flex" justifyContent="center" mt={5}>
         <Pagination
           count={Math.ceil(totalCount / limit) || 1}
           page={page}
           onChange={(e, value) => setPage(value)}
           color="primary"
           size="large"
+          sx={{
+            '& .MuiPaginationItem-root': { color: '#fff' },
+            '& .Mui-selected': { fontWeight: 'bold' }
+          }}
         />
       </Box>
     </Container>
